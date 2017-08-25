@@ -101,6 +101,8 @@ void MenuScene::onMenuItemClicked(Ref *ref) {
     int tag = button->getTag();
     std::stringstream ss;
     ss << "Item tag "  << tag;
+    auto scene = PhysicsScene::createScene();
+    Director::getInstance()->pushScene(scene);
     log(ss.str().c_str());
 }
 
