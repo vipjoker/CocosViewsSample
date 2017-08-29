@@ -80,7 +80,8 @@ ui::Layout *MenuScene::createPage(int startIndex) {
             button->setPosition(Vec2(j * size.width, i * size.width));
             button->addClickEventListener(CC_CALLBACK_1(MenuScene::onMenuItemClicked, this));
             button->setTag(startIndex);
-            button->setTitleText(std::to_string(startIndex++));
+
+            button->setTitleText("index " + startIndex++);
 
             button->setTitleFontSize(40);
             button->setTitleFontName("fonts/Marker.ttf");
@@ -99,11 +100,11 @@ ui::Layout *MenuScene::createPage(int startIndex) {
 void MenuScene::onMenuItemClicked(Ref *ref) {
     auto button = dynamic_cast<ui::Button*>(ref);
     int tag = button->getTag();
-    std::stringstream ss;
+    std::ostringstream ss;
     ss << "Item tag "  << tag;
     auto scene = PhysicsScene::createScene();
     Director::getInstance()->pushScene(scene);
-    log(ss.str().c_str());
+  //   log(ss.str());
 }
 
 void MenuScene::onBackClicked(Ref *ref) {
