@@ -13,11 +13,14 @@ LOCAL_MODULE_FILENAME := libMyGame
 
 LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../../Classes/AppDelegate.cpp \
-                   ../../../Classes/HelloWorldScene.cpp \
+                   ../../../Classes/LetterNode.cpp \
+                   ../../../Classes/Box2dScene.cpp \
+                   ../../../Classes/GLES-Render.cpp \
                    ../../../Classes/Scenes/StartScene.cpp \
                    ../../../Classes/Scenes/MenuScene.cpp \
                    ../../../Classes/Scenes/PhysicsScene.cpp \
-                   ../../../Classes/Scenes/PhysicsScene.cpp
+                   ../../../Classes/CustomNodes/Ball.cpp \
+                   ../../../Classes/CustomNodes/UiNode.cpp
 
 
 

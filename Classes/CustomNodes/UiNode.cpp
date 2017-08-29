@@ -2,7 +2,7 @@
 // Created by oleh on 04.08.17.
 //
 
-#include "CustomMenuButton.h"
+#include "UiNode.h"
 
 bool CustomMenuButton::init() {
     if(!Node::init()){

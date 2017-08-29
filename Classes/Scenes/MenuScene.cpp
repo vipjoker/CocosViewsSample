@@ -67,7 +67,7 @@ ui::Layout *MenuScene::createPage(int startIndex) {
     layout->setBackGroundColorType(ui::Layout::BackGroundColorType::GRADIENT);
 //    layout->setLayoutType(ltype::VERTICAL);
     LinearLayoutParameter *p = LinearLayoutParameter::create();
-    p->setMargin(Margin(10, 10, 10, 10));
+    //p->setMargin(Margin(10, 10, 10, 10));
     p->setGravity(LinearLayoutParameter::LinearGravity::CENTER_HORIZONTAL);
     auto gridContainer = Node::create();
 
@@ -80,8 +80,9 @@ ui::Layout *MenuScene::createPage(int startIndex) {
             button->setPosition(Vec2(j * size.width, i * size.width));
             button->addClickEventListener(CC_CALLBACK_1(MenuScene::onMenuItemClicked, this));
             button->setTag(startIndex);
-
-            button->setTitleText("index " + startIndex++);
+            std::ostringstream ss;
+            ss << startIndex++;
+            button->setTitleText(ss.str());
 
             button->setTitleFontSize(40);
             button->setTitleFontName("fonts/Marker.ttf");

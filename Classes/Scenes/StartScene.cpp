@@ -6,7 +6,7 @@
 #include <cocos/ui/UIButton.h>
 #include <cocos/ui/UIDeprecated.h>
 #include "StartScene.h"
-#include "CustomNodes/CustomMenuButton.h"
+#include "CustomNodes/UiNode.h"
 
 #include "MenuScene.h"
 

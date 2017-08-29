@@ -7,13 +7,17 @@
 
 #include "cocos2d.h"
 #include "CustomNodes/Ball.h"
-
+#include "CustomNodes/UiNode.h"
+#include <time.h>
 USING_NS_CC;
 class PhysicsScene : public Layer {
+    clock_t lastTime;
+    Node *gameRoot;
     PhysicsBody *circle;
     TMXTiledMap *tiles;
     DrawNode *drawNode;
     Ball *colorBall;
+    Vec2 *lastTouch;
 public:
     CREATE_FUNC(PhysicsScene);
     bool init();
@@ -22,9 +26,10 @@ public:
     void setPhysicsWorld(PhysicsWorld *_world){world = _world;}
     static Scene *createScene();
     bool onContactBegin(cocos2d::PhysicsContact &contact);
-    bool onTouchUp(Touch *touch,Event *unusedEvent);
-    void onTouchDown(Touch *touch, Event *unusedEvent);
+    void touchUp(Touch *touch,Event *unusedEvent);
+    bool touchDown(Touch *touch, Event *unusedEvent);
+    void touchMove(Touch *touch,Event *unusedEvent);
+    void touchCanceled(Touch *touch,Event *unusedEvent);
 };
 
-
-#endif //PROJ_ANDROID_STUDIO_PHYSICSSCENE_H
+#endif
