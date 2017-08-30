@@ -25,6 +25,7 @@ bool PhysicsScene::init() {
     auto crateSprite = Sprite::create("crate.png");
     crateSprite->setPosition(Vec2(size.width / 4, size.height / 2));
 
+
     colorBall->setPosition(Vec2(size.width / 2, size.height / 2));
 
 
@@ -54,6 +55,8 @@ bool PhysicsScene::init() {
 
 
     addChild(gameRoot);
+    auto uiNode = UiNode::create();
+    addChild(uiNode);
     auto touchListener = EventListenerTouchOneByOne::create();
     touchListener->onTouchBegan = CC_CALLBACK_2(PhysicsScene::touchDown, this);
     touchListener->onTouchEnded = CC_CALLBACK_2(PhysicsScene::touchUp, this);
