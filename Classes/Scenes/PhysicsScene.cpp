@@ -19,7 +19,6 @@ bool PhysicsScene::init() {
     drawNode->setLineWidth(5);
 
 
-
     lastTouch = nullptr;
     colorBall = Ball::createWithFile("colorball.png");
     auto crateSprite = Sprite::create("crate.png");
@@ -29,12 +28,14 @@ bool PhysicsScene::init() {
     colorBall->setPosition(Vec2(size.width / 2, size.height / 2));
 
 
-    auto edgeBody = PhysicsBody::createEdgeBox(Size(size.width * 3 - 10, size.height - 10), PHYSICSBODY_MATERIAL_DEFAULT);
+    auto edgeBody = PhysicsBody::createEdgeBox(Size(size.width * 3 - 10, size.height - 10),
+                                               PHYSICSBODY_MATERIAL_DEFAULT);
     auto edgeNode = Node::create();
     edgeNode->setPosition(Vec2(size.width / 2, size.height / 2));
     edgeNode->setPhysicsBody(edgeBody);
 
-    circle = PhysicsBody::createCircle(colorBall->getContentSize().width / 2, PhysicsMaterial(.3, .5, .5));
+    circle = PhysicsBody::createCircle(colorBall->getContentSize().width / 2,
+                                       PhysicsMaterial(.3, .5, .5));
 
 
     colorBall->setPhysicsBody(circle);
@@ -55,13 +56,19 @@ bool PhysicsScene::init() {
 
 
     addChild(gameRoot);
-    auto uiNode = UiNode::create();
+    uiNode = UiNode::create();
     addChild(uiNode);
     auto touchListener = EventListenerTouchOneByOne::create();
     touchListener->onTouchBegan = CC_CALLBACK_2(PhysicsScene::touchDown, this);
     touchListener->onTouchEnded = CC_CALLBACK_2(PhysicsScene::touchUp, this);
-    touchListener->onTouchCancelled = CC_CALLBACK_2(PhysicsScene::touchCanceled,this);
-    touchListener->onTouchMoved = CC_CALLBACK_2(PhysicsScene::touchMove,this);
+    touchListener->onTouchCancelled = CC_CALLBACK_2(PhysicsScene::touchCanceled, this);
+    touchListener->onTouchMoved = CC_CALLBACK_2(PhysicsScene::touchMove, this);
+
+    uiNode->getBtnBack()->addClickEventListener(CC_CALLBACK_1(PhysicsScene::onBackPressed, this));
+    uiNode->getBtnSettings()->addClickEventListener(
+            CC_CALLBACK_1(PhysicsScene::onSettingsPressed, this));
+
+
     auto contactListener = EventListenerPhysicsContact::create();
     contactListener->onContactBegin = CC_CALLBACK_1(PhysicsScene::onContactBegin, this);
 
@@ -144,6 +151,21 @@ bool PhysicsScene::onContactBegin(PhysicsContact &contact) {
 }
 
 
+void PhysicsScene::onSettingsPressed(Ref *ref) {
+    if (uiNode->getIsOpen()) {
+        uiNode->closeDialog();
+        getScene()->resume();
+    } else {
+        uiNode->openDialog();
+        getScene()->pause();
+    }
+
+}
+
+void PhysicsScene::onBackPressed(Ref *ref) {
+    auto scene = StartScene::createScene();
+    Director::getInstance()->replaceScene(scene);
+}
 
 
 bool PhysicsScene::touchDown(Touch *touch, Event *unusedEvent) {
@@ -158,7 +180,7 @@ bool PhysicsScene::touchDown(Touch *touch, Event *unusedEvent) {
 
 void PhysicsScene::touchMove(Touch *touch, Event *unusedEvent) {
 
-    gameRoot->setPosition( touch->getLocation() -*lastTouch );
+    gameRoot->setPosition(touch->getLocation() - *lastTouch);
 
 
 }
@@ -169,18 +191,17 @@ void PhysicsScene::touchUp(Touch *touch, Event *unusedEvent) {
     float distance = touch->getLocation().distance(touch->getStartLocation());
 
 
-    float speed = distance/timeSpend;
-    log("Speed  is %f",speed);
+    float speed = distance / timeSpend;
+    log("Speed  is %f", speed);
 
 
-
-    drawNode->drawSegment(touch->getStartLocation(),touch->getLocation(),15,Color4F::RED);
+    drawNode->drawSegment(touch->getStartLocation(), touch->getLocation(), 15, Color4F::RED);
 
     Vec2 loc = touch->getLocation() - touch->getStartLocation();
 
     loc.scale(speed * 10);
     gameRoot->stopAllActions();
-    gameRoot->runAction(MoveBy::create(.5,loc));
+    gameRoot->runAction(MoveBy::create(.5, loc));
     delete lastTouch;
     lastTouch = nullptr;
 
@@ -195,11 +216,13 @@ void PhysicsScene::update(float dt) {
 
     if (colorBall->getRight()) {
         CCLOG("RIGHT");
-        colorBall->getPhysicsBody()->applyForce(Vec2(1000000, 0),colorBall->getPhysicsBody()->getPosition());
+        colorBall->getPhysicsBody()->applyForce(Vec2(1000000, 0),
+                                                colorBall->getPhysicsBody()->getPosition());
     }
     if (colorBall->getLeft()) {
         CCLOG("LEFT");
-        colorBall->getPhysicsBody()->applyForce(Vec2(-1000000, 0), colorBall->getPhysicsBody()->getPosition());
+        colorBall->getPhysicsBody()->applyForce(Vec2(-1000000, 0),
+                                                colorBall->getPhysicsBody()->getPosition());
     }
 }
 

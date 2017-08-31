@@ -4,38 +4,34 @@
 
 #include <Scenes/StartScene.h>
 #include "UiNode.h"
-#include "ui/CocosGUI.h"
 
-using namespace ui;
+
+template<typename T>
+std::string to_string(T value) {
+    std::ostringstream os;
+    os << value;
+    return os.str();
+}
 
 bool UiNode::init() {
     if (!Node::init()) {
         return false;
     }
 
-    colorLayer = LayerColor::create(Color4B(255, 0, 0, 128));
+    dialogLayer = LayerColor::create(Color4B(0, 0, 0, 128));
     setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
     label = Label::createWithTTF("Hello", "fonts/Marker.ttf", 30);
     label->setColor(Color3B::WHITE);
     label->setPosition(0, 100);
     this->setContentSize(Size(300, 300));
-    log("Node dimmension init %f x %f", this->getContentSize().width, this->getContentSize().height);
-
-
-    drawNode = DrawNode::create();
-    drawNode->setAnchorPoint(Vec2(.5, .5));
-    drawNode->drawSolidRect(Vec2(-50, 0), Vec2(50, 50), Color4F::RED);
-
-
-    auto sprite = Sprite::create("HelloWorld.png");
-    colorLayer->setContentSize(Director::getInstance()->getVisibleSize());
-    colorLayer->setVisible(false);
+    dialogLayer->setContentSize(Director::getInstance()->getVisibleSize());
+    dialogLayer->setOpacity(0);
+    setIsOpen(false);
 
     setupButtons();
-    this->addChild(sprite, 5);
-    this->addChild(drawNode, 6);
-    this->addChild(label, 7);
-    this->addChild(colorLayer, 0);
+
+    addChild(label, 7);
+    addChild(dialogLayer, 0);
 
     return true;
 }
@@ -50,25 +46,46 @@ void UiNode::onEnter() {
 void UiNode::setupButtons() {
     Size size = Director::getInstance()->getVisibleSize();
 
-    Button *btnBack = Button::create("comic_src/Back.png");
+    btnBack = Button::create("comic_src/Back.png");
     btnBack->setAnchorPoint(Point::ANCHOR_TOP_LEFT);
     btnBack->setPosition(Vec2(10.0, size.height - 10));
-    btnBack->addClickEventListener(CC_CALLBACK_1(UiNode::onBackPressed, this));
 
-    Button *btnSettings = Button::create("comic_src/Exec.png");
+    btnSettings = Button::create("comic_src/Exec.png");
     btnSettings->setAnchorPoint(Point::ANCHOR_TOP_RIGHT);
-    btnSettings->setPosition(Vec2(size.width -10,size.height -10));
-    btnSettings->addClickEventListener(CC_CALLBACK_1(UiNode::onSettingsPressed, this));
+    btnSettings->setPosition(Vec2(size.width - 10, size.height - 10));
     addChild(btnBack, 5);
     addChild(btnSettings, 5);
+    dialog = ui::Scale9Sprite::create("menu_item.png");
+    dialog->setAnchorPoint(Point::ANCHOR_MIDDLE_BOTTOM);
+    dialog->setContentSize(Size(size.width * 0.8,size.width * 0.8 ));
+    dialog->setPosition(Vec2(size.width / 2, size.height));
+
+
+    auto image = ImageView::create("girl.jpg");
+
+    image->setPosition(dialog->getContentSize()/2);
+    auto drawNode= DrawNode::create(5);
+    auto mask = ClippingNode::create(drawNode);
+    mask->addChild(image);
+    dialog->addChild(mask);
+    dialogLayer->addChild(dialog);
 
 }
 
-void UiNode::onSettingsPressed(Ref *ref) {
-    colorLayer->setVisible(!colorLayer->isVisible());
+void UiNode::openDialog() {
+    CCLOG("dialog open");
+    Size size = Director::getInstance()->getVisibleSize();
+    setIsOpen(true);
+    dialog->stopAllActions();
+    auto moveAct = MoveTo::create(.3,Vec2(size.width/2,size.height/2 - dialog->getContentSize().height/2));
+    dialog->runAction(EaseBackIn::create(moveAct));
 }
 
-void UiNode::onBackPressed(Ref *ref) {
-    auto scene = StartScene::createScene();
-    Director::getInstance()->replaceScene(scene);
+void UiNode::closeDialog() {
+    Size size = Director::getInstance()->getVisibleSize();
+    CCLOG("dialog close");
+    setIsOpen(false);
+    dialog->stopAllActions();
+    dialog->runAction(MoveTo::create(.3,Vec2(size.width/2,size.height)));
 }
+

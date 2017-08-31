@@ -13,6 +13,7 @@ USING_NS_CC;
 class PhysicsScene : public Layer {
     clock_t lastTime;
     Node *gameRoot;
+    UiNode *uiNode;
     PhysicsBody *circle;
     TMXTiledMap *tiles;
     DrawNode *drawNode;
@@ -26,6 +27,10 @@ public:
     void setPhysicsWorld(PhysicsWorld *_world){world = _world;}
     static Scene *createScene();
     bool onContactBegin(cocos2d::PhysicsContact &contact);
+
+    void onBackPressed(Ref *ref);
+    void onSettingsPressed(Ref *ref);
+
     void touchUp(Touch *touch,Event *unusedEvent);
     bool touchDown(Touch *touch, Event *unusedEvent);
     void touchMove(Touch *touch,Event *unusedEvent);

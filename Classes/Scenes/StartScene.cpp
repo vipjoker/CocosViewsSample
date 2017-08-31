@@ -22,6 +22,8 @@ bool StartScene::init() {
     if (!Layer::init()) {
         return false;
     }
+    Director::getInstance()->setClearColor(Color4F(95/255.0,187/255.0,210/255.0,1));
+
     LayerColor *color = LayerColor::create(Color4B::ORANGE);
     addChild(color);
     this->setupButton();
@@ -49,7 +51,7 @@ void StartScene::setupButton() {
     this->addChild(button);
     button->addClickEventListener([](Ref *ref) {
 
-        auto scene = TransitionZoomFlipX::create(1, MenuScene::createScene());
+        auto scene = TransitionZoomFlipX::create(0.3, MenuScene::createScene());
 
         Director::getInstance()->pushScene(scene);
     });

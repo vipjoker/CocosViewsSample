@@ -7,20 +7,27 @@
 
 #include "cocos2d.h"
 #include "Scenes/StartScene.h"
+#include "ui/CocosGUI.h"
+
 USING_NS_CC;
+using namespace ui;
+
 class UiNode:public Node {
 
-    DrawNode *drawNode;
     Label *label;
-    LayerColor *colorLayer;
+    Node *dialog;
+    CC_SYNTHESIZE(bool,isOpen,IsOpen);
+    CC_SYNTHESIZE(LayerColor*,dialogLayer,DialogLayer);
+    CC_SYNTHESIZE(Button*,btnBack,BtnBack);
+    CC_SYNTHESIZE(Button*, btnSettings,BtnSettings);
 
-    void onBackPressed(Ref *ref);
-    void onSettingsPressed(Ref *ref);
+
     void setupButtons();
 public:
     virtual bool init() override;
     virtual void onEnter() override;
-
+    void openDialog();
+    void closeDialog();
     CREATE_FUNC(UiNode);
 };
 

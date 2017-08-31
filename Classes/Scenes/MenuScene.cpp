@@ -75,6 +75,8 @@ ui::Layout *MenuScene::createPage(int startIndex) {
     for (float i = 1; i > 0.2f; i = i - 0.2f)
         for (float j = 0.2f; j < 1; j = j + 0.2f) {
             auto button = Button::create("menu_item.png");
+            button->setScale9Enabled(true);
+            button->setContentSize(Size(size.width *0.15 ,size.width*0.15));
             button->setAnchorPoint(Vec2(.5, .5));
 
             button->setPosition(Vec2(j * size.width, i * size.width));
