@@ -39,6 +39,9 @@
     <content url="file://$MODULE_DIR$/../../Classes/CustomNodes">
       <sourceFolder url="file://$MODULE_DIR$/../../Classes/CustomNodes" isTestSource="false" />
     </content>
+    <content url="file://$MODULE_DIR$/../../Classes/PhysicsDemo">
+      <sourceFolder url="file://$MODULE_DIR$/../../Classes/PhysicsDemo" isTestSource="false" />
+    </content>
     <content url="file://$MODULE_DIR$/../../Classes/Scenes">
       <sourceFolder url="file://$MODULE_DIR$/../../Classes/Scenes" isTestSource="false" />
     </content>

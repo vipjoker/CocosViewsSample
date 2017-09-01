@@ -61,12 +61,17 @@ void UiNode::setupButtons() {
     dialog->setPosition(Vec2(size.width / 2, size.height));
 
 
-    auto image = ImageView::create("girl.jpg");
+    auto image = Sprite::create("girl.jpg");
 
     image->setPosition(dialog->getContentSize()/2);
     auto drawNode= DrawNode::create(5);
     auto mask = ClippingNode::create(drawNode);
+//    mask->setInverted(true);
+    //mask->setPosition(dialog->getContentSize().width/2,dialog->getContentSize().height/2);
+    drawNode->setContentSize(dialog->getContentSize());
+    drawNode->drawSolidCircle(Vec2(0, 0), 50, 360, 32, Color4F::MAGENTA);
     mask->addChild(image);
+
     dialog->addChild(mask);
     dialogLayer->addChild(dialog);
 
@@ -74,6 +79,8 @@ void UiNode::setupButtons() {
 
 void UiNode::openDialog() {
     CCLOG("dialog open");
+
+
     Size size = Director::getInstance()->getVisibleSize();
     setIsOpen(true);
     dialog->stopAllActions();
