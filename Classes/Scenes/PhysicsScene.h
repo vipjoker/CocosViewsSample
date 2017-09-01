@@ -8,9 +8,18 @@
 #include "cocos2d.h"
 #include "CustomNodes/Ball.h"
 #include "CustomNodes/UiNode.h"
+#include "PhysicsDemo/PhysicsTest.h"
 #include <time.h>
 USING_NS_CC;
-class PhysicsScene : public Layer {
+
+namespace
+{
+    Color4F STATIC_COLOR(1.0f, 0.0f, 0.0f, 1.0f);
+    const int DRAG_BODYS_TAG = 0x80;
+}
+
+
+class PhysicsScene : public Layer{
     clock_t lastTime;
     Node *gameRoot;
     UiNode *uiNode;
@@ -19,6 +28,7 @@ class PhysicsScene : public Layer {
     DrawNode *drawNode;
     Ball *colorBall;
     Vec2 *lastTouch;
+    std::unordered_map<int, cocos2d::Node*> _mouses;
 public:
     CREATE_FUNC(PhysicsScene);
     bool init();
@@ -27,6 +37,7 @@ public:
     void setPhysicsWorld(PhysicsWorld *_world){world = _world;}
     static Scene *createScene();
     bool onContactBegin(cocos2d::PhysicsContact &contact);
+    void parseTmx();
 
     void onBackPressed(Ref *ref);
     void onSettingsPressed(Ref *ref);

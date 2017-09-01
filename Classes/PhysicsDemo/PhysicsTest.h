@@ -17,7 +17,6 @@ public:
     
     virtual bool init() override;
     virtual void onEnter() override;
-
     void toggleDebugCallback(cocos2d::Ref* sender);
     
     cocos2d::Sprite* addGrossiniAtPosition(cocos2d::Vec2 p, float scale = 1.0);

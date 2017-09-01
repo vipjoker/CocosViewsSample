@@ -36,14 +36,14 @@ bool PhysicsScene::init() {
 
     circle = PhysicsBody::createCircle(colorBall->getContentSize().width / 2,
                                        PhysicsMaterial(.3, .5, .5));
-
+    circle->setTag(DRAG_BODYS_TAG);
 
     colorBall->setPhysicsBody(circle);
     auto crateBody = PhysicsBody::createBox(crateSprite->getContentSize());
     crateBody->setAngularVelocity(10);
     crateBody->setAngularVelocityLimit(5);
     crateBody->setAngularDamping(1);
-
+    crateBody->setTag(DRAG_BODYS_TAG);
     crateSprite->setPhysicsBody(crateBody);
     circle->setCollisionBitmask(2);
     circle->setContactTestBitmask(true);
@@ -72,27 +72,40 @@ bool PhysicsScene::init() {
     auto contactListener = EventListenerPhysicsContact::create();
     contactListener->onContactBegin = CC_CALLBACK_1(PhysicsScene::onContactBegin, this);
 
-//    sprite->runAction(Liquid::create(2, Size(32,24), 1, 20));
     getEventDispatcher()->addEventListenerWithSceneGraphPriority(contactListener, this);
     getEventDispatcher()->addEventListenerWithSceneGraphPriority(touchListener, this);
 
     scheduleUpdate();
+
+
+    parseTmx();
+
+
+    return true;
+}
+
+
+void PhysicsScene::parseTmx()
+{
+    Size size = Director::getInstance()->getVisibleSize();
+
     tiles = TMXTiledMap::create("map2.tmx");
 
     TMXObjectGroup *group = tiles->getObjectGroup("physics");
-    for (auto &obj : group->getObjects()) {
+    for (auto &obj :group->getObjects())
+    {
         ValueMap &dict = obj.asValueMap();
         std::string s = dict.at("name").asString();
         float x = dict.at("x").asFloat();
         float y = dict.at("y").asFloat();
         std::string type = dict.at("type").asString();
-        if (type == "line") {
+        if (type == "line")
+        {
             log("line found");
-
             ValueVector &points = dict.at("polylinePoints").asValueVector();
-
             std::vector<Vec2> vector;
-            for (auto p : points) {
+            for (auto p :points)
+            {
                 ValueMap &pMap = p.asValueMap();
                 float px = pMap.at("x").asFloat();
                 float py = pMap.at("y").asFloat();
@@ -102,32 +115,29 @@ bool PhysicsScene::init() {
             }
             Vec2 *vecArray = new Vec2[vector.size()];
 
-            for (unsigned int i = 0; i < vector.size(); i++) {
+            for (unsigned int i = 0; i < vector.size(); i++)
+            {
                 vecArray[i] = vector.at(i);
-                if (i != 0) {
+                if (i != 0)
+                {
                     drawNode->drawLine(vector.at(i - 1), vector.at(i), Color4F::WHITE);
                 }
             }
-
-
             auto newBody = PhysicsBody::createEdgeChain(vecArray, (int) vector.size());
             Node *newGround = Node::create();
             newGround->setPhysicsBody(newBody);
             gameRoot->addChild(newGround);
 //            delete[] vector.data();
 //            delete[] vecArray;
-
         }
-        // ValueMap &points =  dict.at("polylinePoints").asValueMap();
+// ValueMap &points =  dict.at("polylinePoints").asValueMap();
         log("Value found name %s x %f y %f", s.c_str(), x, y);
-
     }
-
-
-    return true;
 }
 
-Scene *PhysicsScene::createScene() {
+
+Scene *PhysicsScene::createScene()
+{
     auto scene = Scene::createWithPhysics();
     auto layer = PhysicsScene::create();
     scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
@@ -137,12 +147,14 @@ Scene *PhysicsScene::createScene() {
     return scene;
 }
 
-bool PhysicsScene::onContactBegin(PhysicsContact &contact) {
+bool PhysicsScene::onContactBegin(PhysicsContact &contact)
+{
     auto a = contact.getShapeA()->getBody();
     auto b = contact.getShapeB()->getBody();
 
     if ((a->getCollisionBitmask() == 1 && b->getCollisionBitmask() == 2) ||
-        (b->getCollisionBitmask() == 1 && a->getCollisionBitmask() == 2)) {
+        (b->getCollisionBitmask() == 1 && a->getCollisionBitmask() == 2))
+    {
         CCLOG("COLLISSION");
     }
 
@@ -151,7 +163,8 @@ bool PhysicsScene::onContactBegin(PhysicsContact &contact) {
 }
 
 
-void PhysicsScene::onSettingsPressed(Ref *ref) {
+void PhysicsScene::onSettingsPressed(Ref *ref)
+{
     if (uiNode->getIsOpen()) {
         uiNode->closeDialog();
         getScene()->resume();
@@ -162,13 +175,47 @@ void PhysicsScene::onSettingsPressed(Ref *ref) {
 
 }
 
-void PhysicsScene::onBackPressed(Ref *ref) {
+void PhysicsScene::onBackPressed(Ref *ref)
+{
     auto scene = StartScene::createScene();
     Director::getInstance()->replaceScene(scene);
 }
 
 
-bool PhysicsScene::touchDown(Touch *touch, Event *unusedEvent) {
+bool PhysicsScene::touchDown(Touch *touch, Event *unusedEvent)
+{
+
+
+
+    auto location = touch->getLocation();
+    auto arr = getScene()->getPhysicsWorld()->getShapes(location);
+
+    PhysicsBody* body = nullptr;
+    for (auto& obj : arr)
+    {
+        if ((obj->getBody()->getTag() & DRAG_BODYS_TAG) != 0)
+        {
+            body = obj->getBody();
+            break;
+        }
+    }
+
+    if (body != nullptr)
+    {
+        Node* mouse = Node::create();
+        auto physicsBody = PhysicsBody::create(PHYSICS_INFINITY, PHYSICS_INFINITY);
+        physicsBody->setDynamic(false);
+        mouse->addComponent(physicsBody);
+        mouse->setPosition(location);
+        this->addChild(mouse);
+        PhysicsJointPin* joint = PhysicsJointPin::construct(physicsBody, body, location);
+        joint->setMaxForce(5000.0f * body->getMass());
+        getScene()->getPhysicsWorld()->addJoint(joint);
+        _mouses.insert(std::make_pair(touch->getID(), mouse));
+
+        return true;
+    }
+
 
 
     lastTime = clock();
@@ -178,15 +225,36 @@ bool PhysicsScene::touchDown(Touch *touch, Event *unusedEvent) {
 }
 
 
-void PhysicsScene::touchMove(Touch *touch, Event *unusedEvent) {
+void PhysicsScene::touchMove(Touch *touch, Event *unusedEvent)
+{
 
-    gameRoot->setPosition(touch->getLocation() - *lastTouch);
+
+    auto it = _mouses.find(touch->getID());
+
+    if (it != _mouses.end())
+    {
+        it->second->setPosition(touch->getLocation());
+    }
+    if(lastTouch)
+    {
+        gameRoot->setPosition(touch->getLocation() - *lastTouch);
+    }
 
 
 }
 
 
-void PhysicsScene::touchUp(Touch *touch, Event *unusedEvent) {
+void PhysicsScene::touchUp(Touch *touch, Event *unusedEvent)
+{
+
+    auto it = _mouses.find(touch->getID());
+
+    if (it != _mouses.end())
+    {
+        this->removeChild(it->second);
+        _mouses.erase(it);
+    }
+
     time_t timeSpend = (clock() - lastTime);
     float distance = touch->getLocation().distance(touch->getStartLocation());
 
@@ -195,24 +263,33 @@ void PhysicsScene::touchUp(Touch *touch, Event *unusedEvent) {
     log("Speed  is %f", speed);
 
 
-    drawNode->drawSegment(touch->getStartLocation(), touch->getLocation(), 15, Color4F::RED);
 
     Vec2 loc = touch->getLocation() - touch->getStartLocation();
 
     loc.scale(speed * 10);
     gameRoot->stopAllActions();
     gameRoot->runAction(MoveBy::create(.5, loc));
-    delete lastTouch;
-    lastTouch = nullptr;
+   if(lastTouch)
+   {
+       delete lastTouch;
+       lastTouch = nullptr;
+   }
+
 
 }
 
-void PhysicsScene::touchCanceled(Touch *touch, Event *unusedEvent) {
-    delete lastTouch;
-    lastTouch = nullptr;
+void PhysicsScene::touchCanceled(Touch *touch, Event *unusedEvent)
+{
+    if(lastTouch)
+    {
+        delete lastTouch;
+        lastTouch = nullptr;
+    }
+
 }
 
-void PhysicsScene::update(float dt) {
+void PhysicsScene::update(float dt)
+ {
 
     if (colorBall->getRight()) {
         CCLOG("RIGHT");
@@ -225,6 +302,7 @@ void PhysicsScene::update(float dt) {
                                                 colorBall->getPhysicsBody()->getPosition());
     }
 }
+
 
 
 
