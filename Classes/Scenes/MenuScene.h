@@ -8,6 +8,7 @@
 #include "cocos2d.h"
 #include "cocos/ui/CocosGUI.h"
 #include "PhysicsScene.h"
+#include "PhysicsDemo/PhysicsTest.h"
 #include <string>
 USING_NS_CC;
 class MenuScene :public Layer{

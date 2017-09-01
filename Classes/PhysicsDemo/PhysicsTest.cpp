@@ -45,7 +45,7 @@ void PhysicsDemo::onEnter()
 {
     Scene::onEnter();
     
-    _spriteTexture = SpriteBatchNode::create("Images/grossini_dance_atlas.png", 100)->getTexture();
+    _spriteTexture = SpriteBatchNode::create("HelloWorld.png", 100)->getTexture();
     
     // menu for debug layer
     MenuItemFont::setFontSize(18);
@@ -142,7 +142,7 @@ Sprite* PhysicsDemo::makeBall(Vec2 point, float radius, PhysicsMaterial material
     if (_ball != nullptr)
         ball = Sprite::createWithTexture(_ball->getTexture());
     else
-        ball = Sprite::create("Images/ball.png");
+        ball = Sprite::create("colorball.png");
     
     ball->setScale(0.13f * radius);
     
@@ -164,7 +164,7 @@ Sprite* PhysicsDemo::makeBox(Vec2 point, Size size, int color, PhysicsMaterial m
         yellow = color == 1;
     }
     
-    auto box = yellow ? Sprite::create("Images/YellowSquare.png") : Sprite::create("Images/CyanSquare.png");
+    auto box = yellow ? Sprite::create("colorball.png") : Sprite::create("mallet.png");
     box->setScaleX(size.width / 100.0f);
     box->setScaleY(size.height / 100.0f);
     
@@ -187,7 +187,7 @@ Sprite* PhysicsDemo::makeTriangle(Vec2 point, Size size, int color, PhysicsMater
         yellow = color == 1;
     }
     
-    auto triangle = yellow ? Sprite::create("Images/YellowTriangle.png") : Sprite::create("Images/CyanTriangle.png");
+    auto triangle = yellow ? Sprite::create("colorball.png") : Sprite::create("mallet.png");
     
     if (size.height == 0)
     {
@@ -501,87 +501,6 @@ void PhysicsDemoJoints::onEnter()
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
