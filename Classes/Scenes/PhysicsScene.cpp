@@ -130,6 +130,16 @@ void PhysicsScene::parseTmx()
 //            delete[] vector.data();
 //            delete[] vecArray;
         }
+
+        if(type == "square")
+        {
+
+            for ( auto it = dict.begin(); it != dict.end(); ++it ){
+                CCLOG("square names %s",it->first.c_str());
+            }
+
+        }
+
 // ValueMap &points =  dict.at("polylinePoints").asValueMap();
         log("Value found name %s x %f y %f", s.c_str(), x, y);
     }

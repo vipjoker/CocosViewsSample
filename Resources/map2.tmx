@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="8" height="12" tilewidth="70" tileheight="70" nextobjectid="7">
- <tileset firstgid="1" name="tiles" tilewidth="70" tileheight="70" tilecount="1">
+<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="8" height="12" tilewidth="70" tileheight="70" nextobjectid="7">
+ <tileset firstgid="1" name="tiles" tilewidth="70" tileheight="70" tilecount="1" columns="0">
   <tile id="0">
    <image width="70" height="70" source="tiles/box.png"/>
   </tile>
  </tileset>
  <objectgroup color="#ff0000" name="physics">
-  <object id="1" name="square" type="square" x="52.3943" y="408.596" width="210" height="210" rotation="-54.1432"/>
+  <object id="1" name="square" type="square" x="52.3943" y="412.596" width="210" height="210" rotation="-54.1432"/>
   <object id="4" type="line" x="0" y="0">
    <polyline points="14,792 329,748 419,609 572,603 846.273,789.848 1306.09,694.303 1456.42,594.333 1602.97,665.697"/>
   </object>
