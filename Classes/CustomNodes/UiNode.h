@@ -14,7 +14,6 @@ using namespace ui;
 
 class UiNode:public Node {
 
-    Label *label;
     Node *dialog;
     CC_SYNTHESIZE(bool,isOpen,IsOpen);
     CC_SYNTHESIZE(LayerColor*,dialogLayer,DialogLayer);

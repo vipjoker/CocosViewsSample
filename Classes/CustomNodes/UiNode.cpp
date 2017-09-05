@@ -20,9 +20,7 @@ bool UiNode::init() {
 
     dialogLayer = LayerColor::create(Color4B(0, 0, 0, 128));
     setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
-    label = Label::createWithTTF("Hello", "fonts/Marker.ttf", 30);
-    label->setColor(Color3B::WHITE);
-    label->setPosition(0, 100);
+
     this->setContentSize(Size(300, 300));
     dialogLayer->setContentSize(Director::getInstance()->getVisibleSize());
     dialogLayer->setOpacity(0);
@@ -30,7 +28,6 @@ bool UiNode::init() {
 
     setupButtons();
 
-    addChild(label, 7);
     addChild(dialogLayer, 0);
 
     return true;

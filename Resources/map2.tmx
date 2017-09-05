@@ -1,14 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="8" height="12" tilewidth="70" tileheight="70" nextobjectid="7">
+<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="8" height="12" tilewidth="70" tileheight="70" nextobjectid="11">
  <tileset firstgid="1" name="tiles" tilewidth="70" tileheight="70" tilecount="1" columns="0">
   <tile id="0">
    <image width="70" height="70" source="tiles/box.png"/>
   </tile>
  </tileset>
  <objectgroup color="#ff0000" name="physics">
+  <object id="4" type="line" x="-12" y="45.3333">
+   <polyline points="14,792 362,794.667 432,654.667 502,584.667 712,794.667 1306.09,694.303 1456.42,594.333 1602.97,665.697"/>
+  </object>
   <object id="1" name="square" type="square" x="52.3943" y="412.596" width="210" height="210" rotation="-54.1432"/>
-  <object id="4" type="line" x="0" y="0">
-   <polyline points="14,792 329,748 419,609 572,603 846.273,789.848 1306.09,694.303 1456.42,594.333 1602.97,665.697"/>
+  <object id="7" name="square" type="square" x="30.8929" y="584.12" width="103.304" height="81.0663" rotation="-54.1432"/>
+  <object id="8" name="square" type="square" x="362.144" y="252.133" width="103.304" height="81.0663" rotation="15"/>
+  <object id="9" name="square" type="square" x="445.836" y="510.267" width="103.304" height="81.0663" rotation="200.857"/>
+  <object id="10" type="poly" x="200" y="706.061">
+   <polygon points="0,0 84.8485,-87.8788 163.636,-42.4242 84.8485,42.4242"/>
   </object>
  </objectgroup>
 </map>

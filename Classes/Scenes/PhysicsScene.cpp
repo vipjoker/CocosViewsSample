@@ -99,6 +99,7 @@ void PhysicsScene::parseTmx()
         float x = dict.at("x").asFloat();
         float y = dict.at("y").asFloat();
         std::string type = dict.at("type").asString();
+
         if (type == "line")
         {
             log("line found");
@@ -120,7 +121,7 @@ void PhysicsScene::parseTmx()
                 vecArray[i] = vector.at(i);
                 if (i != 0)
                 {
-                    drawNode->drawLine(vector.at(i - 1), vector.at(i), Color4F::WHITE);
+                    drawNode->drawSegment(vector.at(i - 1), vector.at(i), 5,Color4F::WHITE);
                 }
             }
             auto newBody = PhysicsBody::createEdgeChain(vecArray, (int) vector.size());
@@ -133,10 +134,24 @@ void PhysicsScene::parseTmx()
 
         if(type == "square")
         {
+            float width = dict.at("width").asFloat();
+            float height = dict.at("height").asFloat();
+            float sqx = dict.at("x").asFloat();
+            float sqy = dict.at("y").asFloat();
+            Value v = dict["rotation"];
 
-            for ( auto it = dict.begin(); it != dict.end(); ++it ){
-                CCLOG("square names %s",it->first.c_str());
+
+            if(v == Value::Null){
+                CCLOG("Rotation not found");
+            }else{
+                CCLOG("Rotation %f",v.asFloat());
             }
+            Node *square = Node::create();
+            square->setPosition(Vec2(sqx,sqy));
+
+            PhysicsBody *body = PhysicsBody::createBox(Size(width,height));
+            square->setPhysicsBody(body);
+            gameRoot->addChild(square);
 
         }
 
