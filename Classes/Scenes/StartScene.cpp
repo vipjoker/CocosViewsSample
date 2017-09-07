@@ -7,7 +7,7 @@
 #include <cocos/ui/UIDeprecated.h>
 #include "StartScene.h"
 #include "CustomNodes/UiNode.h"
-
+#include "EditorScene.h"
 #include "MenuScene.h"
 
 using namespace ui;
@@ -31,9 +31,18 @@ bool StartScene::init() {
     Size size = Director::getInstance()->getVisibleSize();
     auto editorButton = Button::create("menu_item.png");
     editorButton->setScale9Enabled(true);
+    editorButton->setTitleText("Editor");
+
+    editorButton->setTitleColor(Color3B::BLACK);
+    editorButton->setTitleFontSize(20);
     editorButton->setContentSize(Size(150,50));
     editorButton->setPosition(Vec2(size.width/2,200));
     addChild(editorButton);
+
+    editorButton->addClickEventListener([](Ref *ref){
+        Director::getInstance()->setClearColor(Color4F(21/255.0f,0/255.0f,71/255.0f,1));
+        Director::getInstance()->replaceScene(EditorScene::createScene());
+    });
 
 
     return true;

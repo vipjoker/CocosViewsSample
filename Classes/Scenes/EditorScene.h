@@ -5,9 +5,17 @@
 #ifndef MYGAME_EDITORSCENE_H
 #define MYGAME_EDITORSCENE_H
 
+#include "cocos2d.h"
+USING_NS_CC;
+class EditorScene :public Layer{
+public:
+    bool init();
+    CREATE_FUNC(EditorScene);
+    static Scene *createScene();
 
-class EditorScene {
-
+    virtual bool onTouchBegan(Touch *touch, Event *unused_event) override;
+    virtual void onTouchMoved(Touch *touch, Event *unused_event) override;
+    virtual void onTouchEnded(Touch *touch, Event *unused_event) override;
 };
 
 
