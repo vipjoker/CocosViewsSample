@@ -19,9 +19,9 @@ misrepresented as being the original software.
 */
 
 #include <cocos2d.h>			// for file loading only
-#include <Box2D\Box2D.h>		// for creating physics objects
+#include "Box2D/Box2D.h"		// for creating physics objects
 #include <vector>
-#include <json\document.h>		// for parsing json file
+#include "json/document.h"		// for parsing json file
 
 #define PTM_RATIO 30.0			// pixel to meter ratio
 

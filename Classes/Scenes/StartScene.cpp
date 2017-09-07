@@ -29,6 +29,11 @@ bool StartScene::init() {
     this->setupButton();
 
     Size size = Director::getInstance()->getVisibleSize();
+    auto editorButton = Button::create("menu_item.png");
+    editorButton->setScale9Enabled(true);
+    editorButton->setContentSize(Size(150,50));
+    editorButton->setPosition(Vec2(size.width/2,200));
+    addChild(editorButton);
 
 
     return true;

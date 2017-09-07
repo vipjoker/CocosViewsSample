@@ -17,6 +17,9 @@ bool MenuScene::init() {
     pageView = ui::PageView::create();
 //    auto indicator = PageViewIndicator::create();
     pageView->setIndicatorEnabled(true);
+    pageView->setBounceEnabled(true);
+    pageView->setSwallowTouches(true);
+    pageView->setPropagateTouchEvents(true);
     pageView->setBackGroundColorType(Layout::BackGroundColorType::SOLID);
     pageView->setIndicatorSelectedIndexColor(Color3B::WHITE);
     pageView->setContentSize(size);
@@ -78,7 +81,8 @@ ui::Layout *MenuScene::createPage(int startIndex) {
             button->setScale9Enabled(true);
             button->setContentSize(Size(size.width *0.15 ,size.width*0.15));
             button->setAnchorPoint(Vec2(.5, .5));
-
+            button->setPropagateTouchEvents(true);
+            button->setSwallowTouches(false);
             button->setPosition(Vec2(j * size.width, i * size.width));
             button->addClickEventListener(CC_CALLBACK_1(MenuScene::onMenuItemClicked, this));
             button->setTag(startIndex);

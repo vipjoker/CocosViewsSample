@@ -19,8 +19,8 @@ misrepresented as being the original software.
 */
 
 #include <cocos2d.h>
-#include <Box2D\Box2D.h>
-#include <b2DebugDraw.h>
+#include "Box2D/Box2D.h"
+#include "b2DebugDraw.h"
 
 USING_NS_CC;
 
