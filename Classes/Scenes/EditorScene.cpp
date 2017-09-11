@@ -5,10 +5,23 @@
 #include "EditorScene.h"
 
 bool EditorScene::init() {
-        if(!Layer::init()){
-            return false;
-        }
-    setTouchEnabled(true);
+    if (!Layer::init()) {
+        return false;
+    }
+
+    Size size = Director::getInstance()->getVisibleSize();
+    auto scroll = ui::ListView::create();
+
+
+    scroll->pushBackCustomItem(ui::Button::create("crate.png"));
+    scroll->pushBackCustomItem(ui::Button::create("crate.png"));
+    scroll->pushBackCustomItem(ui::Button::create("crate.png"));
+    scroll->pushBackCustomItem(ui::Button::create("crate.png"));
+    scroll->pushBackCustomItem(ui::Button::create("crate.png"));
+    scroll->pushBackCustomItem(ui::Button::create("crate.png"));
+    scroll->pushBackCustomItem(ui::Button::create("crate.png"));
+    scroll->pushBackCustomItem(ui::Button::create("crate.png"));
+    addChild(scroll);
     return true;
 }
 
@@ -20,15 +33,3 @@ Scene *EditorScene::createScene() {
     return scene;
 }
 
-bool EditorScene::onTouchBegan(Touch *touch, Event *unused_event) {
-    CCLOG("TOUCH received");
-    return true;
-}
-
-void EditorScene::onTouchMoved(Touch *touch, Event *unused_event) {
-    Layer::onTouchMoved(touch, unused_event);
-}
-
-void EditorScene::onTouchEnded(Touch *touch, Event *unused_event) {
-    Layer::onTouchEnded(touch, unused_event);
-}
