@@ -20,8 +20,8 @@ using namespace CocosDenshion;
 #define CC_USE_PHYSICS
 USING_NS_CC;
 
-//static cocos2d::Size designResolutionSize = cocos2d::Size(1280,720);
-static cocos2d::Size designResolutionSize = cocos2d::Size(720, 1280);
+static cocos2d::Size designResolutionSize = cocos2d::Size(1280,720);
+//static cocos2d::Size designResolutionSize = cocos2d::Size(720, 1280);
 
 AppDelegate::AppDelegate()
 {
