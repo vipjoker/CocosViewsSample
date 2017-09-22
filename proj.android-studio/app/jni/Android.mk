@@ -21,6 +21,8 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../../Classes/Scenes/PhysicsScene.cpp \
                    ../../../Classes/CustomNodes/Ball.cpp \
                    ../../../Classes/CustomNodes/UiNode.cpp \
+                   ../../../Classes/CustomNodes/Shape.cpp \
+                   ../../../Classes/CustomNodes/Editable.cpp \
                    ../../../Classes/PhysicsDemo/PhysicsTest.cpp \
                    ../../../Classes/PhysicsDemo/VisibleRect.cpp \
                    ../../../Classes/Scenes/EditorScene.cpp
