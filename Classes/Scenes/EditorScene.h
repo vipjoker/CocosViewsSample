@@ -9,13 +9,22 @@
 #include "ui/CocosGUI.h"
 #include "CustomNodes/Shape.h"
 USING_NS_CC;
+
+struct EditRect{
+    Rect rect;
+    bool isPressed;
+};
+
+
 class EditorScene :public Layer{
     Vector<Shape*> shapes;
     DrawNode *drawNode;
+    std::vector<EditRect> rects;
 public:
     bool init();
     CREATE_FUNC(EditorScene);
     static Scene *createScene();
+    void update(float dt);
 
 };
 

@@ -28,7 +28,6 @@ cmake_minimum_required(VERSION 3.1)
 
 set(APP_NAME MyGame)
 project(${APP_NAME})
-
 set(COCOS2D_ROOT ${CMAKE_SOURCE_DIR}/cocos2d)
 
 SET( USE_BOX2D ON CACHE BOOL "Turn on Box2D for 2D physics" )
@@ -183,7 +182,7 @@ else ()
     add_executable(${APP_NAME} ${GAME_SRC} ${GAME_HEADERS})
 endif ()
 
-target_link_libraries(${APP_NAME} cocos2d box2d)
+target_link_libraries(${APP_NAME} cocos2d box2d sqlite3)
 
 set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin")
 
