@@ -31,18 +31,16 @@ bool FileChooserDialog::init() {
     listView->setBackGroundColor(Color3B::BLUE);
     listView->setBackGroundColorOpacity(200);
     addChild(listView);
-    listView->addChild(createItem("FIRST"));
-    listView->addChild(createItem("Second"));
-    listView->addChild(createItem("Third"));
-    listView->addChild(createItem("Third"));
-    listView->addChild(createItem("Third"));
-    listView->addChild(createItem("Third"));
-    listView->addChild(createItem("Third"));
-    listView->addChild(createItem("Third"));
-    listView->addChild(createItem("Third"));
-    listView->addChild(createItem("Third"));
 
+    FileUtils *fileUtils = FileUtils::getInstance();
+    listView->setTouchEnabled(true);
+    for(auto str : fileUtils->listFiles("/")){
 
+        listView->addChild(createItem(str));
+    }
+    listView->addEventListener([](Ref *ref, ui::ListView::EventType type){
+        CCLOG("Listview touched ");
+    });
 
     return true;
 }
@@ -55,7 +53,9 @@ ui::Layout *FileChooserDialog::createItem(std::string name) {
     ui::Text *text = ui::Text::create();
     text->setString(name);
     text->setColor(Color3B::BLACK);
-    text->setPosition(Vec2(10,10));
+    text->setAnchorPoint(Point::ANCHOR_MIDDLE_LEFT);
+    text->setPosition(Vec2(10,50));
+    text->setFontSize(20);
     layout->addChild(text);
     return layout;
 }
