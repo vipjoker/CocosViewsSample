@@ -161,7 +161,7 @@ set(GAME_HEADERS
         Classes/GLES-Render.h
         Classes/LetterNode.h
         ${PLATFORM_SPECIFIC_HEADERS}
-        Classes/Scenes/EditorScene.cpp Classes/Scenes/EditorScene.h Classes/CustomNodes/Shape.cpp Classes/CustomNodes/Shape.h Classes/CustomNodes/Editable.cpp Classes/CustomNodes/Editable.h)
+        Classes/Scenes/EditorScene.cpp Classes/Scenes/EditorScene.h Classes/CustomNodes/Shape.cpp Classes/CustomNodes/Shape.h Classes/CustomNodes/Editable.cpp Classes/CustomNodes/Editable.h Classes/CustomNodes/FileChooserDialog.cpp Classes/CustomNodes/FileChooserDialog.h)
 
 
 # Configure libcocos2d

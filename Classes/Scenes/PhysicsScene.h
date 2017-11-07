@@ -6,10 +6,11 @@
 #define PROJ_ANDROID_STUDIO_PHYSICSSCENE_H
 
 #include "cocos2d.h"
-#include "CustomNodes/Ball.h"
 #include "CustomNodes/UiNode.h"
 #include "PhysicsDemo/PhysicsTest.h"
 #include <time.h>
+#include <CustomNodes/Ball.h>
+
 USING_NS_CC;
 
 namespace

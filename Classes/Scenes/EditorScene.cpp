@@ -6,6 +6,7 @@
 #include "external/sqlite3/include/sqlite3.h"
 #include "EditorScene.h"
 #include <vector>
+#include "../CustomNodes/FileChooserDialog.h"
 
 bool EditorScene::init() {
     if (!Layer::init()) {
@@ -25,6 +26,23 @@ bool EditorScene::init() {
     drawNode = DrawNode::create();
 //    drawNode->setContentSize(size);
     addChild(drawNode);
+
+
+  ui::Button *btn = ui::Button::create("menu_item.png");
+    btn->setContentSize({100,30});
+    btn->setScale9Enabled(true);
+    btn->setTitleText("HELLO BUTTON");
+    btn->setPosition(size/2);
+    addChild(btn);
+    btn->addClickEventListener([this](Ref *ref){
+        Size s = Director::getInstance()->getVisibleSize();
+        auto dilaog = FileChooserDialog::create();
+        dilaog->setPosition(s/2);
+
+        addChild(dilaog,5);
+        CCLOG("Button clicked");
+    });
+
 
     sqlite3 *pdb=NULL;
     std::string path=FileUtils::getInstance()->getDefaultResourceRootPath() +"save.db3";
