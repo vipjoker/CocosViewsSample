@@ -4,6 +4,7 @@
 
 #include "FileChooserDialog.h"
 const std::string img_letter = "letter.png";
+const std::string menu_item = "menu_item.png";
 
 bool FileChooserDialog::init() {
     if(!ui::Layout::init()){
@@ -25,18 +26,47 @@ bool FileChooserDialog::init() {
     addChild(btn,2);
 
     listView = ui::ListView::create();
-    listView->setContentSize({500,400});
+    listView->setContentSize({500,380});
     listView->setAnchorPoint(Point::ANCHOR_MIDDLE_TOP);
-    listView->setPosition(Vec2(250,500));
+    listView->setPosition(Vec2(250,450));
     listView->setBackGroundColorType(BackGroundColorType::SOLID);
     listView->setBackGroundColor(Color3B::BLUE);
     listView->setBackGroundColorOpacity(200);
     addChild(listView);
 
-    ui::EditBox *box = ui::EditBox::create(Size(50,30),img_letter);
+    ui::TextField *box = ui::TextField::create("Filename","fonts/arial.ttf",30);
+    box->setFontSize(20);
+    box->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
+    box->setCursorChar('|');
     addChild(box);
+    box->setPosition(Vec2(10,10));
 
-    box->setPosition(Vec2(250,20));
+    ui::Button *btnSave = ui::Button::create(menu_item);
+    btnSave->setTitleText("Save");
+    btnSave->setScale9Enabled(true);
+    btnSave->setAnchorPoint(Point::ANCHOR_BOTTOM_RIGHT);
+
+    btnSave->setContentSize(Size(70,50));
+    btnSave->setPosition(Vec2(410,10));
+
+    ui::Button *btnLoad = ui::Button::create(menu_item);
+    btnLoad->setTitleText("Load");
+    btnLoad->setScale9Enabled(true);
+    btnLoad->setAnchorPoint(Point::ANCHOR_BOTTOM_RIGHT);
+    btnLoad->setContentSize(Size(70,50));
+    btnLoad->setPosition(Vec2(490,10));
+
+    ui::Text *field = ui::Text::create();
+    field->setString("HELLO");
+    field->setTextColor(Color4B::BLACK);
+    field->setFontSize(30);
+    field->setAnchorPoint(Point::ANCHOR_TOP_LEFT);
+    field->setPosition(Vec2(10,490));
+    addChild(field);
+
+    addChild(btnSave);
+    addChild(btnLoad);
+
     listFolder("/home/omak/Downloads/");
     listView->addEventListener([this](Ref *ref, ui::ListView::EventType type){
         CCLOG("Listview touched ");
