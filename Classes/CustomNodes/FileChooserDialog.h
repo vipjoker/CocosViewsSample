@@ -15,7 +15,8 @@ class FileChooserDialog :public ui::Layout {
 public:
     bool init();
     CREATE_FUNC(FileChooserDialog);
-    ui::Layout *createItem(std::string name);
+    ui::Layout *createItem(std::string name,Color3B color);
+    void listFolder(const std::string path);
 
 };
 
