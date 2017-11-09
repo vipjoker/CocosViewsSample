@@ -8,6 +8,8 @@
 #include "cocos2d.h"
 #include "ui/CocosGUI.h"
 
+#include <cocos/network/HttpRequest.h>
+#include <cocos/network/HttpClient.h>
 USING_NS_CC;
 
 class FileChooserDialog :public ui::Layout {
@@ -16,8 +18,8 @@ public:
     bool init();
     CREATE_FUNC(FileChooserDialog);
     ui::Layout *createItem(std::string name,Color3B color);
-    void listFolder(const std::string path);
-
+    void listFolder(const char* path,bool print);
+    void onResponse(network::HttpClient* client, network::HttpResponse* response);
 };
 
 

@@ -37,17 +37,7 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${COCOS2D_ROOT}/cmake/Modules/")
 include(CocosBuildHelpers)
 
 
-# Some macro definitions
-if (WINDOWS)
-    if (BUILD_SHARED_LIBS)
-        ADD_DEFINITIONS(-D_USRDLL -D_EXPORT_DLL_ -D_USEGUIDLL -D_USREXDLL -D_USRSTUDIODLL)
-    else ()
-        ADD_DEFINITIONS(-DCC_STATIC)
-    endif ()
-
-    ADD_DEFINITIONS(-DCOCOS2DXWIN32_EXPORTS -D_WINDOWS -DWIN32 -D_WIN32)
-    set(PLATFORM_FOLDER win32)
-elseif (MACOSX OR APPLE)
+if (MACOSX OR APPLE)
     ADD_DEFINITIONS(-DCC_TARGET_OS_MAC)
     ADD_DEFINITIONS(-DUSE_FILE32API)
     set(PLATFORM_FOLDER mac)
@@ -90,24 +80,14 @@ set(PLATFORM_SPECIFIC_HEADERS)
 
 if (MACOSX OR APPLE)
     set(PLATFORM_SPECIFIC_SRC
-            proj.ios_mac/mac/main.cpp
-            )
+            proj.ios_mac/mac/main.cpp)
 elseif (LINUX)
     set(PLATFORM_SPECIFIC_SRC
-            proj.linux/main.cpp
-            )
-elseif (WIN32)
-    set(PLATFORM_SPECIFIC_SRC
-            proj.win32/main.cpp
-            )
-    set(PLATFORM_SPECIFIC_HEADERS
-            proj.win32/main.h
-            proj.win32/resource.h
-            )
+            proj.linux/main.cpp)
+
 elseif (ANDROID)
     set(PLATFORM_SPECIFIC_SRC
-            proj.android-studio/app/jni/hellocpp/main.cpp
-            )
+            proj.android-studio/app/jni/hellocpp/main.cpp)
 endif ()
 
 include_directories(
@@ -120,12 +100,6 @@ include_directories(
         ${COCOS2D_ROOT}/cocos/audio/include/
         Classes
 )
-if (WIN32)
-    include_directories(
-            ${COCOS2D_ROOT}/external/glfw3/include/win32
-            ${COCOS2D_ROOT}/external/win32-specific/gles/include/OGLES
-    )
-endif (WIN32)
 
 set(GAME_SRC
         Classes/AppDelegate.cpp
